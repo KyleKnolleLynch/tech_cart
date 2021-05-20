@@ -11,7 +11,7 @@ export default makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
-    marginTop: '2em',
+    margin: '2em 0',
   },
   emptyButton: {
     minWidth: '150px',

@@ -7,12 +7,15 @@ import CardMedia from '@material-ui/core/CardMedia'
 
 import useStyles from './styles'
 
-const CartItem = ({ item }) => {
+const CartItem = ({
+    item,
+    updateCartQty,
+    removeFromCart
+}) => {
     const classes = useStyles()
 
-    console.log(item)
     return (
-        <Card>
+        <Card className={classes.root}>
             <CardMedia image={item.media.source} alt={item.name} className={classes.media} />
             <CardContent className={classes.cardContent}>
                 <Typography variant='h5'>{item.name}</Typography>
@@ -20,11 +23,11 @@ const CartItem = ({ item }) => {
             </CardContent>
             <CardActions className={classes.cardActions}>
                 <div className={classes.buttons}>
-                    <Button type='button' size='small' className={classes.qtyChange}>-</Button>
+                    <Button onClick={() => updateCartQty(item.id, item.quantity - 1)} type='button' size='small' className={classes.qtyChange}>-</Button>
                     <Typography variant='h6'>{item.quantity}</Typography>
-                    <Button type='button' size='small' className={classes.qtyChange}>+</Button>
+                    <Button onClick={() => updateCartQty(item.id, item.quantity + 1)} type='button' size='small' className={classes.qtyChange}>+</Button>
                 </div>
-                <Button variant='contained' type='button' color='secondary'>Remove</Button>
+                <Button onClick={() => removeFromCart(item.id)} variant='contained' type='button' color='secondary'>Remove</Button>
             </CardActions>
         </Card>
     )

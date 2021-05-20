@@ -7,13 +7,18 @@ import { Link } from 'react-router-dom'
 
 import useStyles from './styles'
 
-const Cart = ({ cartItems }) => {
+const Cart = ({
+    cartItems,
+    updateCartQty,
+    removeFromCart,
+    emptyCart
+}) => {
     const classes = useStyles()
 
     const EmptyCart = () => {
         return (
             <Typography variant='h6'>Your cart is currently empty.
-            <Link to='/' className={classes.link}> Start shopping for motherboards!</Link></Typography>
+                <Link to='/' className={classes.link}> Start shopping for motherboards!</Link></Typography>
         )
     }
 
@@ -23,7 +28,11 @@ const Cart = ({ cartItems }) => {
                 <Grid container spacing={3}>
                     {cartItems.line_items.map((item) => (
                         <Grid item key={item.id} xs={12} sm={4}>
-                            <CartItem item={item} />
+                            <CartItem
+                                item={item}
+                                updateCartQty={updateCartQty}
+                                removeFromCart={removeFromCart}
+                            />
                         </Grid>
                     ))}
                 </Grid>
@@ -32,8 +41,8 @@ const Cart = ({ cartItems }) => {
                         Subtotal: {cartItems.subtotal.formatted_with_symbol}
                     </Typography>
                     <div>
-                        <Button className={classes.emptyButton} size='large' type='button' variant='contained' color='secondary'>Empty Cart</Button>
-                        <Button className={classes.checkoutButton} size='large' type='button' variant='contained' color='primary'>Checkout</Button>
+                        <Button onClick={emptyCart} className={classes.emptyButton} size='large' type='button' variant='contained' color='secondary'>Empty Cart</Button>
+                        <Button component={Link} to='/checkout' className={classes.checkoutButton} size='large' type='button' variant='contained' color='primary'>Checkout</Button>
                     </div>
                 </div>
             </>
