@@ -12,7 +12,7 @@ import { commerce } from '../../lib/commerce'
 
 
 
-const AddressForm = ({ next, checkoutToken }) => {
+const AddressForm = ({ proceed, checkoutToken }) => {
     const [shippingStates, setShippingStates] = useState([])
     const [shippingState, setShippingState] = useState('')
     const [shippingOptions, setShippingOptions] = useState([])
@@ -50,14 +50,13 @@ const AddressForm = ({ next, checkoutToken }) => {
         <>
             <Typography variant='h6' gutterBottom>Shipping Address</Typography>
             <FormProvider {...methods}>
-                <form onSubmit={methods.handleSubmit((data) => next(data))}>
+                <form onSubmit={methods.handleSubmit((data) => proceed({ ...data, shippingState, shippingOption }))}>
                     <Grid container spacing={3}>
                         <FormInput name='firstName' label='First name' />
                         <FormInput name='lastName' label='Last name' />
                         <FormInput name='address' label='Address' />
                         <FormInput name='email' label='Email' />
                         <FormInput name='city' label='City' />
-
                         <Grid item xs={12} sm={6}>
                             <InputLabel id='stateLabel'>State</InputLabel>
                             <Select labelId='stateLabel' value={shippingState} fullWidth onChange={(e) => setShippingState(e.target.value)}>

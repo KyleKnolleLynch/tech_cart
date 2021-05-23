@@ -38,18 +38,18 @@ const Checkout = ({ cart }) => {
 
     const backStep = () => setActiveStep(prevActiveStep => prevActiveStep - 1)
 
-    const next = data => {
+    const proceed = data => {
         setShippingData(data)
         nextStep()
     }
-   
+
     const Confirmation = () => (
         <div>Confirmation</div>
     )
 
     const Form = () => activeStep === 0
-        ? <AddressForm next={next} checkoutToken={checkoutToken} />
-        : <PaymentForm />
+        ? <AddressForm proceed={proceed} checkoutToken={checkoutToken} />
+        : <PaymentForm shippingData={shippingData} checkoutToken={checkoutToken} />
     return (
         <>
             <div className={classes.toolbar} />
