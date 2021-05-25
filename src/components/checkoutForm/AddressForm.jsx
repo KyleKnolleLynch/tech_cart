@@ -37,12 +37,25 @@ const AddressForm = ({ proceed, checkoutToken }) => {
     }
 
     useEffect(() => {
-        fetchState()
+        let mounted = true
+        if (mounted) {
+            fetchState()
+        }
+
+        return () => {
+            mounted = false
+        }
     }, [])
 
     useEffect(() => {
-        if (shippingState) {
+        let mounted = true
+
+        if (mounted && shippingState) {
             fetchShippingOptions(checkoutToken.id, 'US', shippingState)
+        }
+
+        return () => {
+            mounted = false
         }
     }, [shippingState, checkoutToken.id])
 
@@ -59,7 +72,7 @@ const AddressForm = ({ proceed, checkoutToken }) => {
                         <FormInput name='city' label='City' />
                         <Grid item xs={12} sm={6}>
                             <InputLabel id='stateLabel'>State</InputLabel>
-                            <Select labelId='stateLabel' value={shippingState} fullWidth onChange={(e) => setShippingState(e.target.value)}>
+                            <Select labelId='stateLabel' value={shippingState} fullWidth required onChange={(e) => setShippingState(e.target.value)}>
                                 {states.map(state => (
                                     <MenuItem key={state.id} value={state.id}>{state.label}</MenuItem>
                                 ))}
